@@ -3,8 +3,7 @@
 const _ = require('lodash');
 const request = require('request');
 const rp = require('request-promise-native');
-//const BaseBot = require('@knack/base-bot');
-const BaseBot = require('../../base-bot');
+const BaseBot = require('@knack/base-bot');
 const formatter = require('./formatter.js');
 
 class HttpBot extends BaseBot {
@@ -18,16 +17,16 @@ class HttpBot extends BaseBot {
 
     this.logger.debug(`Parsing fetch results: ${JSON.stringify(this._fetch_results)}`);
 
-    this._fetch_results.page_url = this._job.page_url;
-    this._fetch_results.parent_url = this._job.parent_url;
+    this._fetch_results.page_url = this.job.page_url;
+    this._fetch_results.parent_url = this.job.parent_url;
 
     // now we must format the data into our "bot_definition"
     // we want to take bot_defition.values, and reduce everything to keyvalue pairs and pass them to the bot execute step
     let parsed_data = {};
 
-    _.each(this._job.bot_definition.values, (bot_value) => {
+    _.each(this.job.bot_definition.values, (bot_value) => {
 
-      parsed_data[bot_value.key] = formatter.format(bot_value.type, this._job.bot_values[bot_value.key], this._fetch_results);
+      parsed_data[bot_value.key] = formatter.format(bot_value.type, this.job.bot_values[bot_value.key], this._fetch_results);
     });
 
     // Can we not put this in a formatter.format('plain_text') call or something?
@@ -39,21 +38,19 @@ class HttpBot extends BaseBot {
 
     parsed_data.request_body = parsed_data.request_body.replace(regex_html_tags, '');
 
-    this._parse_results = parsed_data;
+    this.logger.debug(`Parsed results are: ${JSON.stringify(this.parsed_data)}`);
 
-    this.logger.debug(`Parsed results are: ${JSON.stringify(this._parse_results)}`);
-
-    return this;
+    return parsed_data;
   }
 
   async execute() {
 
     let request_options = {      
-      method: _.find(this._job.bot_values, (value, key) => {
+      method: _.find(this.job.bot_values, (value, key) => {
 
         return key === 'request_method'
       }),
-      url: _.find(this._job.bot_values, (value, key) => {
+      url: _.find(this.job.bot_values, (value, key) => {
 
         return key === 'request_url'
       }),
@@ -63,7 +60,7 @@ class HttpBot extends BaseBot {
 
     let request_body = JSON.parse(this._parse_results.request_body);
 
-    let request_content_type = _.find(this._job.bot_values, (value, key) => {
+    let request_content_type = _.find(this.job.bot_values, (value, key) => {
 
       return key === 'request_content_type'
     });
@@ -78,12 +75,12 @@ class HttpBot extends BaseBot {
       request_options.body = request_body;
     }
 
-    let authorization_header_scheme = _.find(this._credentials.value, (credentials_value) => {
+    let authorization_header_scheme = _.find(this.credentials.value, (credentials_value) => {
 
       return credentials_value.name === 'scheme';
     }).value;
 
-    let authorizaton_header_value = _.find(this._credentials.value, (credentials_value) => {
+    let authorizaton_header_value = _.find(this.credentials.value, (credentials_value) => {
 
       return credentials_value.name === 'credentials';
     }).value;
@@ -91,13 +88,9 @@ class HttpBot extends BaseBot {
     
     request_options.headers.Authorization = `${authorization_header_scheme} ${authorizaton_header_value}`;
 
-    console.log(JSON.stringify(request_options));
+    this.logger.debug(`Requestion options are ${JSON.stringify(request_options)}`);
 
-    this._execute_results = await rp(request_options);
-
-    console.log(this._execute_results);
-
-    return this;
+    return rp(request_options);
   }
 };
 

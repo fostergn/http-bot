@@ -1,4 +1,4 @@
-`use strict`;
+'use strict';
 
 const should = require(`chai`).should(); //eslint-disable-line no-unused-vars
 const HttpBot = require(`../index.js`);
@@ -61,62 +61,64 @@ describe(`HttpBot`, () => {
     ]
   }
 
-  xit(`Can fetch data`, async () => {
+  it(`Can fetch data`, async () => {
 
-    let slack_bot = new HttpBot(http_job, credentials);
+    let http_bot = new HttpBot(http_job, credentials);
 
-    await slack_bot.fetch();
+    should.exist(http_bot, `http_bot`);
 
-    should.exist(slack_bot, `fetch() slack_bot`);
-    should.exist(slack_bot._fetch_results, `fetch() slack_bot._fetch_results`);
-    should.equal(slack_bot._fetch_results.id, RECORD_ID, `slack_bot.id should be ${RECORD_ID}`);
-    should.equal(slack_bot._fetch_results.field_1, `Hello World`, `slack_bot.field_1 should be 'Hello World'`);
+    let results = await http_bot.fetch();
+
+    should.exist(results, `fetch() http_bot`);
+    should.equal(results.id, RECORD_ID, `http_bot.id should be ${RECORD_ID}`);
+    should.equal(results.field_1, `Hello World`, `http_bot.field_1 should be 'Hello World'`);
   });
 
-  xit(`Can parse data`, async () => {
+  it(`Can parse data`, async () => {
 
-    let expected_message_value = `:partywizard:\nHello World\n574f77bbc3731fe348d36352\nundefined\n\nno hardcoding required`;
-    let slack_bot = new HttpBot(http_job, credentials);
+    let http_bot = new HttpBot(http_job, credentials);
 
-    await slack_bot.fetch();
+    should.exist(http_bot, `parse() http_bot`);
 
-    await slack_bot.parse();
+    http_bot._fetch_results = await http_bot.fetch();
 
-    should.exist(slack_bot, `parse() slack_bot`);
-    should.exist(slack_bot._parse_results, `parse() slack_bot._parse_results`);
-    should.exist(slack_bot._parse_results.message_value, `parse() slack_bot._parse_results.message_value`);
-    should.equal(slack_bot._parse_results.message_value, expected_message_value, `message_value should be ${expected_message_value}`);
+    should.exist(http_bot._fetch_results, `parse() http_bot._fetch_results`);
+
+    http_bot._parse_results = await http_bot.parse();
+
+    should.exist(http_bot._parse_results, `parse() http_bot._parse_results`);
+    should.exist(http_bot._parse_results.request_body, `parse() http_bot._parse_results.request_body`);
   });
 
-  xit(`Can execute`, async () => {
+  it(`Can execute`, async () => {
 
     let expected_result_data = `{"attachments":[{"color":"#ff0000","mrkdwn_in":["text"],"text":":partywizard:\\nHello World\\n574f77bbc3731fe348d36352\\nundefined\\n\\nno hardcoding required"}]}`;
-    let slack_bot = new HttpBot(http_job, credentials);
+    let http_bot = new HttpBot(http_job, credentials);
 
-    await slack_bot.fetch();
-    await slack_bot.parse();
-    await slack_bot.execute();
+    should.exist(http_bot, `http_bot`);
 
-    should.exist(slack_bot, `execute() slack_bot`);
-    should.exist(slack_bot._execute_results, `execute() slack_bot._execute_results`);
-    should.exist(slack_bot._execute_results.data, `execute() slack_bot._execute_results.data`);
-    should.equal(slack_bot._execute_results.data, expected_result_data, `expected_result_data should be ${expected_result_data}`);
+    http_bot._fetch_results = await http_bot.fetch();
+
+    should.exist(http_bot._fetch_results, `parse() http_bot._fetch_results`);
+
+    http_bot._parse_results = await http_bot.parse();
+
+    should.exist(http_bot._parse_results, `parse() http_bot._parse_results`);
+
+    let results = await http_bot.execute();
+
+    should.exist(results, `execute() results`);
   });
 
   it(`Can BASE _execute`, async () => {
 
-    let expected_result_data = `{"attachments":[{"color":"#ff0000","mrkdwn_in":["text"],"text":":partywizard:\\nHello World\\n574f77bbc3731fe348d36352\\nundefined\\n\\nno hardcoding required"}]}`;
-    let slack_bot = new HttpBot(http_job, credentials);
+    let http_bot = new HttpBot(http_job, credentials);
 
-    await slack_bot._execute().catch((ex) => {
+    should.exist(http_bot, `http_bot`);
 
-      console.log('EXCEPTION TIME!');
-      console.log(ex);
-    });
+    let results = await http_bot._execute()
 
-    // should.exist(slack_bot, `execute() slack_bot`);
-    // should.exist(slack_bot._execute_results, `execute() slack_bot._execute_results`);
-    // should.exist(slack_bot._execute_results.data, `execute() slack_bot._execute_results.data`);
-    // should.equal(slack_bot._execute_results.data, expected_result_data, `expected_result_data should be ${expected_result_data}`);
+    should.exist(http_bot, `execute() http_bot`);
+    should.exist(http_bot._execute_results, `execute() http_bot._execute_results`);
   });
 });
