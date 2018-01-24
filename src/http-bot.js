@@ -5,12 +5,30 @@ const request = require('request');
 const rp = require('request-promise-native');
 const BaseBot = require('@knack/base-bot');
 const formatter = require('./formatter.js');
+const fs = require('fs');
+const rule_template = fs.readFileSync(__dirname + '/rule_template.vue', 'utf8');
+const settings_template = fs.readFileSync(__dirname + '/settings_template.vue', 'utf8');
 
 class HttpBot extends BaseBot {
 
   constructor(job, credentials) {
 
     super(job, credentials);
+  }
+
+  rules_template() {
+
+    return rule_template;
+  }
+
+  settings_template() {
+
+    return settings_template;
+  }
+
+  type() {
+
+    return 'http-bot';
   }
 
   async parse() {
