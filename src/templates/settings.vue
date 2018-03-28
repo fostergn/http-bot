@@ -1,11 +1,15 @@
-<div class="bot-credentials-input" id="credentials-http-bot">
+<div id="settings-http" class="bot-credentials-input">
     <div class="full-padding gray-bg">
     <p>Add credentials from your HTTP Request below.</p>
   </div>
   <form class="form-modal sixhundred bottom-margin">
     <div class="clearfix view-input">
-      <label for="bot_name">Integration Name</label>
-      <input id="bot_name" name="bot_name" type="text">
+      <label for="uri">URI</label>
+      <input id="uri" name="uri" type="text">
+    </div>
+    <div class="clearfix view-input">
+      <label for="name">Credential Name</label>
+      <input id="name" name="name" type="text">
     </div>
     <div class="clearfix view-input">
       <label for="scheme">Scheme</label>

@@ -3,11 +3,8 @@
 const _ = require('lodash');
 const request = require('request');
 const rp = require('request-promise-native');
-const BaseBot = require('@knack/base-bot');
+const BaseBot = require('../../base-bot/src/base-bot.js');
 const formatter = require('./formatter.js');
-const fs = require('fs');
-const rule_template = fs.readFileSync(__dirname + '/rule_template.vue', 'utf8');
-const settings_template = fs.readFileSync(__dirname + '/settings_template.vue', 'utf8');
 
 class HttpBot extends BaseBot {
 
@@ -16,19 +13,19 @@ class HttpBot extends BaseBot {
     super(job, credentials);
   }
 
-  rules_template() {
+  static get directory() {
 
-    return rule_template;
+    return __dirname;
   }
 
-  settings_template() {
+  static get serviceName() {
 
-    return settings_template;
+    return `http`;
   }
 
-  type() {
+  static get displayName() {
 
-    return 'http-bot';
+    return 'HTTP Request';
   }
 
   async parse() {
