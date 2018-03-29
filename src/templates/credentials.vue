@@ -1,7 +1,4 @@
 <div id="credentials-http" class="bot-credentials-input">
-    <div class="full-padding gray-bg">
-    <p>Add credentials for your HTTP Request below.</p>
-  </div>
   <div class="clearfix view-input">
     <label for="name">Credential Name</label>
     <input id="name" name="name" type="text" value="my credential name goes here">
