@@ -1,5 +1,5 @@
 <section class="form">
-  <form v-on:submit.prevent="console.log(window);">
+  <form v-on:submit.prevent="console.log('VUE FORM DATA STRINGIFIED IS:');console.log(JSON.stringify(form));">
     <div class="some_fake_key">
       <div>
         <span>
