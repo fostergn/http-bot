@@ -61,8 +61,8 @@ class HttpBot extends BaseBot {
   async execute() {
 
     let request_options = {      
-      method: this.job.values.request-method,
-      url: this.job.values.request-url,
+      method: this.job.values.request_method,
+      url: this.job.values.request_url,
       headers: {
       }
     };

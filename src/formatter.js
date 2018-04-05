@@ -37,7 +37,7 @@ class Formatter {
     return message;
   }
 
-  format(type, template, data) {
+  format(template, data) {
 
     return this.formatTextArea(template, data);
   };

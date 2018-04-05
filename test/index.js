@@ -5,50 +5,40 @@ const HttpBot = require(`../index.js`);
 
 describe(`HttpBot`, () => {
 
-  const RECORD_ID = `574f77bbc3731fe348d36352`;
+  const RECORD_ID = `5ac5bdae87a1b333939f856b`;
 
   let http_job = {
-    application_id: `574f77aea3ac2b9648426646`,
-    knack_api_key: `8527f9f0-28da-11e6-b871-3931990eedb4`,
-    object_key: `object_1`,
+    bot_type: 'http-bot',
+    "account_id": "5642358f761de55247eecfa3",
+    "application_id": "5aabddb3b3423c09c9525c91",
+    "knack_api_key": "e83f5290-32ba-11e8-9244-45ebe4c01672",
+    "object_key": "object_1",
     record_id: RECORD_ID,
-    api_uri: `https://api.knack.com/v1/`,
-    bot_definition: {
-      title: 'HTTP Bot',
-      values: [
-        {
-          title: 'Request URL',
-          key: 'request_url',
-          type: 'textbox'
-        },
-        {
-          title: 'Content Type',
-          key: 'request_content_type',
-          type: 'dropdown_single_select',
-          options: ['application/json', 'application/x-www-form-urlencoded']
-        },
-        {
-          title: 'Request Method',
-          key: 'request_method',
-          type: 'dropdown_single_select',
-          options: ['GET', 'POST', 'PUT', 'DELETE']
-        },
-        {
-          title: 'Request Body',
-          key: 'request_body',
-          type: 'textarea'
-        }
-      ]
-    },
+    "integration_id": "5abd5db07f1d490b8add080e",
+    api_uri: `http://api.knackdev.com:3000/v1/`,
+    "page_url": "http://knackdavid.knackdev.com:3000/botsonbotsonbots#home/",
+    "parent_url": "http://knackdavid.knackdev.com:3000/botsonbotsonbots#",
     values: {
-          "request_body" : `{"To":"+1 502-592-0414","From":"+1 502-890-9540","Body":"http-bot unit test! Field 1 is: {field_1}"}`,
-          "request_url": "https://api.twilio.com/2010-04-01/Accounts/AC8da9c7891bef34c26709710bae30578b/Messages.json",
-          "request_method": "POST",
-          "request_content_type": "application/x-www-form-urlencoded"
-      }
+      "request_url" : "https://hooks.slack.com/services/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",
+      "request_content_type" : "application/json",
+      "name" : "some name",
+      "request_body" : "{\n\"text\": \"record rule test field_1: {field_1}\"\n}",
+      "request_method" : "POST"
+    },
+    "integration": {
+      "_id" : "5ac5c41f87a1b333939f85ce",
+      "account_id" : "5642358f761de55247eecfa3",
+      "application_id" : "5aabddb3b3423c09c9525c91",
+      "type" : "bot",
+      "name" : "HTTP BIN POST",
+      "service" : "http",
+      "credential_id" : "5ac5c41e6394f71237a3be8a",
+      "__v" : 0
+    }
   };
 
   let credentials = {
+    "_id": "5abd5daf6394f71237a3be89",
     value: [
       {
         name: `scheme`,
@@ -58,7 +48,12 @@ describe(`HttpBot`, () => {
         name: `credentials`,
         value: `QUM4ZGE5Yzc4OTFiZWYzNGMyNjcwOTcxMGJhZTMwNTc4YjpmY2YwNmE0ODAxNmZlODNkMzA4OGI4YjcxODJlYjkxMQ==`
       },
-    ]
+    ],
+    "name": "my credential name goes here",
+    "bot_type": "http",
+    "application_id": "5aabddb3b3423c09c9525c91",
+    "account_id": "5642358f761de55247eecfa3",
+    "type": "credentials"
   }
 
   it(`Can fetch data`, async () => {

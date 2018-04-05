@@ -10,6 +10,13 @@
             <p>name is: {{ $store.state.return_value.name }}</p>
           </div>
         </div>
+        <div class="field">
+          <label class="label">URL</label>
+          <div class="control">
+            <input v-model="$store.state.return_value.request_url" class="input" type="text" placeholder="Text input">
+            <p>URL is: {{ $store.state.return_value.request_url }}</p>
+          </div>
+        </div>
         <div>
           <div>
             <label class="label">Content Type: (should just be a header like postman does)</label>
@@ -18,6 +25,12 @@
               <option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>
             </select>
             <span>Selected content_type: {{ $store.state.return_value.request_content_type }}</span>
+          </div>
+        </div>
+        <div>
+          <div>
+            <label class="label">Body:</label>
+            <textarea v-model="$store.state.return_value.request_body"></textarea>
           </div>
         </div>
         <div>
