@@ -53,7 +53,7 @@ class HttpBot extends BaseBot {
 
     parsed_data.request_body = parsed_data.request_body.replace(regex_html_tags, '');
 
-    this.logger.debug(`Parsed results are: ${JSON.stringify(this.parsed_data)}`);
+    this.logger.debug(`Parsed fetch results is: ${JSON.stringify(parsed_data)}`);
 
     return parsed_data;
   }
