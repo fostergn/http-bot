@@ -40,7 +40,7 @@ describe(`HttpBot`, () => {
         }
       ]
     },
-    bot_values: {
+    values: {
           "request_body" : `{"To":"+1 502-592-0414","From":"+1 502-890-9540","Body":"http-bot unit test! Field 1 is: {field_1}"}`,
           "request_url": "https://api.twilio.com/2010-04-01/Accounts/AC8da9c7891bef34c26709710bae30578b/Messages.json",
           "request_method": "POST",

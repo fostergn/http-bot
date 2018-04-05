@@ -39,12 +39,7 @@ class Formatter {
 
   format(type, template, data) {
 
-    switch (type) {
-
-      case 'textarea':
-
-        return this.formatTextArea(template, data);
-    }
+    return this.formatTextArea(template, data);
   };
 }
 

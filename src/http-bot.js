@@ -3,7 +3,7 @@
 const _ = require('lodash');
 const request = require('request');
 const rp = require('request-promise-native');
-const BaseBot = require('../../base-bot/src/base-bot.js');
+const BaseBot = require('@knack/base-bot');
 const formatter = require('./formatter.js');
 
 class HttpBot extends BaseBot {
@@ -35,13 +35,13 @@ class HttpBot extends BaseBot {
     this._fetch_results.page_url = this.job.page_url;
     this._fetch_results.parent_url = this.job.parent_url;
 
-    // now we must format the data into our "bot_definition"
+    // now we must format the data into our
     // we want to take bot_defition.values, and reduce everything to keyvalue pairs and pass them to the bot execute step
     let parsed_data = {};
 
-    _.each(this.job.bot_definition.values, (bot_value) => {
+    _.each(this.job.values, (value, key) => {
 
-      parsed_data[bot_value.key] = formatter.format(bot_value.type, this.job.bot_values[bot_value.key], this._fetch_results);
+      parsed_data[key] = formatter.format(value, this._fetch_results);
     });
 
     // Can we not put this in a formatter.format('plain_text') call or something?
@@ -61,21 +61,15 @@ class HttpBot extends BaseBot {
   async execute() {
 
     let request_options = {      
-      method: _.find(this.job.bot_values, (value, key) => {
-
-        return key === 'request_method'
-      }),
-      url: _.find(this.job.bot_values, (value, key) => {
-
-        return key === 'request_url'
-      }),
+      method: this.job.values.request-method,
+      url: this.job.values.request-url,
       headers: {
       }
     };
 
     let request_body = JSON.parse(this._parse_results.request_body);
 
-    let request_content_type = _.find(this.job.bot_values, (value, key) => {
+    let request_content_type = _.find(this.job.values, (value, key) => {
 
       return key === 'request_content_type'
     });
