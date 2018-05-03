@@ -18,14 +18,23 @@ class HttpBot extends BaseBot {
     return __dirname;
   }
 
-  static get serviceName() {
+  get serviceName() {
 
     return `http`;
   }
 
-  static get displayName() {
+  get actions() {
 
-    return 'HTTP Request';
+    return [
+      {
+        displayName: `Make a HTTP request`,
+        action: `request`
+      },
+      {
+        displayName: `DO NOT SELECT THIS`,
+        action: `told-you-not-to-select-this`
+      }
+    ];
   }
 
   async parse() {
@@ -58,7 +67,7 @@ class HttpBot extends BaseBot {
     return parsed_data;
   }
 
-  async execute() {
+  async request() {
 
     let request_options = {      
       method: this.job.values.request_method,

@@ -23,7 +23,8 @@ describe(`HttpBot`, () => {
       "request_content_type" : "application/json",
       "name" : "some name",
       "request_body" : "{\n\"text\": \"record rule test field_1: {field_1}\"\n}",
-      "request_method" : "POST"
+      "request_method" : "POST",
+      "action": "request"
     },
     "integration": {
       "_id" : "5ac5c41f87a1b333939f85ce",
@@ -83,26 +84,6 @@ describe(`HttpBot`, () => {
 
     should.exist(http_bot._parse_results, `parse() http_bot._parse_results`);
     should.exist(http_bot._parse_results.request_body, `parse() http_bot._parse_results.request_body`);
-  });
-
-  it(`Can execute`, async () => {
-
-    let expected_result_data = `{"attachments":[{"color":"#ff0000","mrkdwn_in":["text"],"text":":partywizard:\\nHello World\\n574f77bbc3731fe348d36352\\nundefined\\n\\nno hardcoding required"}]}`;
-    let http_bot = new HttpBot(http_job, credentials);
-
-    should.exist(http_bot, `http_bot`);
-
-    http_bot._fetch_results = await http_bot.fetch();
-
-    should.exist(http_bot._fetch_results, `parse() http_bot._fetch_results`);
-
-    http_bot._parse_results = await http_bot.parse();
-
-    should.exist(http_bot._parse_results, `parse() http_bot._parse_results`);
-
-    let results = await http_bot.execute();
-
-    should.exist(results, `execute() results`);
   });
 
   it(`Can BASE _execute`, async () => {
