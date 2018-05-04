@@ -1,10 +1,10 @@
 {
   "name": "@knack/http-bot",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@knack/base-bot": "1.0.14",
+    "@knack/base-bot": "1.0.15",
     "lodash": "4.17.4",
     "request": "2.83.0",
     "request-promise-native": "1.0.5"

@@ -18,12 +18,12 @@ class HttpBot extends BaseBot {
     return __dirname;
   }
 
-  get serviceName() {
+  static serviceName() {
 
     return `http`;
   }
 
-  get actions() {
+  static actions() {
 
     return [
       {
