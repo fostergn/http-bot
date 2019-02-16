@@ -1,86 +1,85 @@
 <template>
-  <section class="form">
-    <label>SAMPLE INPUT: {{ $store.state.sampleInput }}</span></label>
-    <form v-on:submit.prevent="">
-      <div class="some_fake_key">
-        <div class="field">
-          <label class="label">Name</label>
-          <div class="control">
-            <input v-model="$store.state.return_value.name" class="input" type="text" placeholder="Text input">
-            <p>name is: {{ $store.state.return_value.name }}</p>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">URL</label>
-          <div class="control">
-            <input v-model="$store.state.return_value.request_url" class="input" type="text" placeholder="Text input">
-            <p>URL is: {{ $store.state.return_value.request_url }}</p>
-          </div>
-        </div>
-        <div>
-          <div>
-            <label class="label">Content Type: (should just be a header like postman does)</label>
-            <select v-model="$store.state.return_value.request_content_type">
-              <option value="application/json">application/json</option>
-              <option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>
-            </select>
-            <span>Selected content_type: {{ $store.state.return_value.request_content_type }}</span>
-          </div>
-        </div>
-        <div>
-          <div>
-            <label class="label">Body:</label>
-            <textarea v-model="$store.state.return_value.request_body"></textarea>
-          </div>
-        </div>
-        <div>
-          <span>Headers</span>
-        </div>
-        <div class="col">
-          <div class="key-value-group" style="float: left;">
-            <input class="key" type="text" style="width: 200px;" />
-            <input class="value" type="text" style="width: 200px;" />
-            <a href="#" class="btn selector tiny light-gray">Add Field</a>
-            <ul class="selector-list fancy-scrollbar fields-subject display-none">
-              <li><a><span>Field Name</span></a></li>
-            </ul>
-          </div>
-          <div class="buttons key-value-buttons" style="float: right;">
-            <a class="icon icon-remove-button btn-remove" title="Remove this key"></a>
-            <a class="icon icon-add-button btn-add" title="Add a new Key"></a>
-          </div>
-        </div>
-        <div>
-          <div class="col">
-            <span>Method</span>
-            <select v-model="$store.state.return_value.request_method">
-              <option value="GET">GET</option>
-              <option value="POST">POST</option>
-              <option value="PUT">PUT</option>
-              <option value="DELETE">DELETE</option>
-            </select>
-            <span>Selected request_method: {{ $store.state.return_value.request_method }}</span>
-          </div>
-        </div>
-      </div>
-     <div class="field is-grouped">
-      <div class="control">
-        <button id="btn_integration_submit" class="button">
-          Submit
-        </button>
-      </div>
-    </div>
-    </form>
-  </section>
+  <el-form ref="form" :model="$store.state.values" label-width="180px">
+    <h2>Knackbot</h2>
+    <el-form-item
+      prop="name"
+      label="Activity Name">
+      <el-input v-model="$store.state.values.name"></el-input>
+    </el-form-item>
+    <el-form-item
+      prop="url"
+      placeholder="Request Url"
+      label="Request Url">
+      <el-input v-model="$store.state.values.url"></el-input>
+    </el-form-item>
+    <el-form-item
+      label="Request Content Type">
+      <el-select
+        v-model="$store.state.values.requestContentType"
+        placeholder="Content Type">
+        <el-option
+          label="application/json"
+          value="application/json"></el-option>
+        <el-option
+          label="application/x-www-form-urlencoded"
+          value="application/x-www-form-urlencoded"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item
+      prop="body"
+      label="Body">
+      <el-input
+        type="textarea"
+        v-model="$store.state.values.body"></el-input>
+    </el-form-item>
+    <el-form-item
+      label="Method">
+      <el-select
+        v-model="$store.state.values.method"
+        placeholder="Method">
+        <el-option
+          label="GET"
+          value="get"></el-option>
+        <el-option
+          label="POST"
+          value="post"></el-option>
+        <el-option
+          label="PUT"
+          value="put"></el-option>
+        <el-option
+          label="DELETE"
+          value="delete"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="submitForm('ruleForm')">Create</el-button>
+      <el-button @click="resetForm('ruleForm')">Reset</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
+  module.exports = {
 
-module.exports = {
+    methods: {
+      submitForm () {},
+      resetForm () {}
+    },
+    mounted () {
 
-  mounted: function() {
-
-    console.log(`HTTP RULES COMPONENT IS MOUNTED`);
+      console.log(`mounted request`)
+    }
   }
-}
 </script>
+
+<style scoped lang="scss">
+  form {
+    width: 100%;
+  }
+  .el-form-item__content > div {
+    width: 100%;
+  }
+  label.el-form-item__label {
+    display: block;
+  }
+</style>
